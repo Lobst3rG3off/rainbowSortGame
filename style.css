@@ -1,0 +1,83 @@
+#container{
+    width: 300px;
+    display: block;
+    margin: auto;
+  }
+  
+  h1 {
+      text-align: center;
+  }
+  p {
+    float: right;
+    
+    background-color: darkslategrey;
+  }
+  
+  #list{
+    list-style: none;
+  }
+  
+  #list li{
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .parent {
+    display: grid;
+    place-items: center;
+    
+    background: lightblue;
+    width: 500px;
+    height: 500px;
+    
+    resize: both;
+    overflow: auto;
+  }
+  
+  .child {
+   
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: 1px solid red;
+    background: lightpink;
+    font-size: 2rem;
+    text-align: center;
+    color: blanchedalmond;
+  }
+
+  .wrapper { 
+    height: 100%;
+    width: 100%;
+    left:0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  background-size: 1800% 1800%;
+  
+  -webkit-animation: rainbow 18s ease infinite;
+  -z-animation: rainbow 18s ease infinite;
+  -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;}
+  
+  @-webkit-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @-moz-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @-o-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @keyframes rainbow { 
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
