@@ -1,56 +1,72 @@
-let list = document.getElementById('list')
-let base, randomized, dragging, draggedOver;
-let isRight = 'Not In Order!';
+const rainbowApp = {};
 
-const genRandom = (array) => {
-  base = array.slice()
-  randomized = array.sort(() => Math.random() - 0.5)
-  if (randomized.join("") !== base.join("")){
-      renderItems(randomized)
-   } else {
-     //recursion to account if the randomization returns the original array
-     genRandom()
-   }
-}
+rainbowApp.list = document.getElementById("list");
+rainbowApp.isRight = "Not In Order!";
 
-const renderItems = (data) =>{
-  document.getElementById('isRight').innerText = isRight
-  list.innerText = ''
-  data.forEach(item=>{
-    let node = document.createElement("li");    
-    node.draggable = true
-    node.style.backgroundColor = item
-    node.style.backgroundColor = node.style.backgroundColor.length > 0  
-    ? item : 'lightblue'
-    node.addEventListener('drag', setDragging) 
-    node.addEventListener('dragover', setDraggedOver)
-    node.addEventListener('drop', compare) 
-    node.innerText = item
-    list.appendChild(node)
-  })
-}
+rainbowApp.genRandom = () => {
+  const orderedRainbow = [
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "indigo",
+    "violet"
+  ];
+  rainbowApp.base = orderedRainbow.slice();
+  rainbowApp.randomized = orderedRainbow.sort(() => Math.random() - 0.5);
 
-const compare = (e) =>{
-  let index1 = randomized.indexOf(dragging);
-  let index2 = randomized.indexOf(draggedOver);
-  randomized.splice(index1, 1)
-  randomized.splice(index2, 0, dragging)
- 
-  isRight = randomized.join("") === base.join("") 
-    ? 'You Did It!': 'Not In Order!'
- 
-  renderItems(randomized)
+  // recursion to account if the randomization returns the original array
+  if (rainbowApp.randomized.join("") === rainbowApp.base.join("")) {
+    rainbowApp.genRandom();
+  }
 };
 
+rainbowApp.renderItems = () => {
+  document.getElementById("isRight").innerText = rainbowApp.isRight;
+  rainbowApp.list.innerText = "";
+  rainbowApp.randomized.forEach(item => {
+    const node = document.createElement("li");
+    node.draggable = true;
+    node.style.backgroundColor = item;
+    node.addEventListener("drag", rainbowApp.setDragging);
+    node.addEventListener("dragover", rainbowApp.setDraggedOver);
+    node.addEventListener("drop", rainbowApp.compare);
+    node.innerText = item;
+    rainbowApp.list.appendChild(node);
+  });
+};
 
-const setDraggedOver = (e) => {
-  e.preventDefault();
-  draggedOver = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
-}
+rainbowApp.compare = () => {
+  const index1 = rainbowApp.randomized.indexOf(rainbowApp.dragging);
+  const index2 = rainbowApp.randomized.indexOf(rainbowApp.draggedOver);
+  rainbowApp.randomized.splice(index1, 1);
+  rainbowApp.randomized.splice(index2, 0, rainbowApp.dragging);
 
-const setDragging = (e) =>{
-  dragging = Number.isNaN(parseInt(e.target.innerText)) ? e.target.innerText : parseInt(e.target.innerText)
-}
+  rainbowApp.isRight =
+    rainbowApp.randomized.join("") === rainbowApp.base.join("")
+      ? "You Did It!"
+      : "Not In Order!";
 
-// genRandom([0, 1, 2, 3, 4, 5, 6])
-genRandom(['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'])
+  rainbowApp.renderItems();
+};
+
+rainbowApp.setDraggedOver = e => {
+  e.preventDefault();
+  rainbowApp.draggedOver = Number.isNaN(parseInt(e.target.innerText, 10))
+    ? e.target.innerText
+    : parseInt(e.target.innerText, 10);
+};
+
+rainbowApp.setDragging = e => {
+  rainbowApp.dragging = Number.isNaN(parseInt(e.target.innerText, 10))
+    ? e.target.innerText
+    : parseInt(e.target.innerText, 10);
+};
+
+rainbowApp.init = () => {
+  rainbowApp.genRandom();
+  rainbowApp.renderItems();
+};
+
+rainbowApp.init();
