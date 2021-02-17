@@ -3,21 +3,25 @@ const rainbowApp = {};
 rainbowApp.list = document.getElementById("list");
 rainbowApp.isRight = "Not In Order!";
 
+rainbowApp.arrayIsCorrect = () =>
+  rainbowApp.randomized.map(item => item.color).join("") ===
+  rainbowApp.base.map(item => item.color).join("");
+
 rainbowApp.genRandom = () => {
   const orderedRainbow = [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "blue",
-    "indigo",
-    "violet"
+    { color: "red", fontColor: "black" },
+    { color: "orange", fontColor: "black" },
+    { color: "yellow", fontColor: "black" },
+    { color: "green", fontColor: "white" },
+    { color: "blue", fontColor: "white" },
+    { color: "indigo", fontColor: "violet" },
+    { color: "violet", fontColor: "indigo" }
   ];
   rainbowApp.base = orderedRainbow.slice();
   rainbowApp.randomized = orderedRainbow.sort(() => Math.random() - 0.5);
 
   // recursion to account if the randomization returns the original array
-  if (rainbowApp.randomized.join("") === rainbowApp.base.join("")) {
+  if (rainbowApp.arrayIsCorrect()) {
     rainbowApp.genRandom();
   }
 };
@@ -28,25 +32,33 @@ rainbowApp.renderItems = () => {
   rainbowApp.randomized.forEach(item => {
     const node = document.createElement("li");
     node.draggable = true;
-    node.style.backgroundColor = item;
+    node.style.backgroundColor = item.color;
+    node.style.color = item.fontColor;
+    node.innerText = item.color;
     node.addEventListener("drag", rainbowApp.setDragging);
     node.addEventListener("dragover", rainbowApp.setDraggedOver);
     node.addEventListener("drop", rainbowApp.compare);
-    node.innerText = item;
     rainbowApp.list.appendChild(node);
   });
 };
 
 rainbowApp.compare = () => {
-  const index1 = rainbowApp.randomized.indexOf(rainbowApp.dragging);
-  const index2 = rainbowApp.randomized.indexOf(rainbowApp.draggedOver);
-  rainbowApp.randomized.splice(index1, 1);
-  rainbowApp.randomized.splice(index2, 0, rainbowApp.dragging);
+  const draggedItem = rainbowApp.randomized.find(
+    item => item.color === rainbowApp.dragging
+  );
+  const draggedOverItem = rainbowApp.randomized.find(
+    item => item.color === rainbowApp.draggedOver
+  );
 
-  rainbowApp.isRight =
-    rainbowApp.randomized.join("") === rainbowApp.base.join("")
-      ? "You Did It!"
-      : "Not In Order!";
+  const index1 = rainbowApp.randomized.indexOf(draggedItem);
+  const index2 = rainbowApp.randomized.indexOf(draggedOverItem);
+
+  rainbowApp.randomized.splice(index1, 1);
+  rainbowApp.randomized.splice(index2, 0, draggedItem);
+
+  rainbowApp.isRight = rainbowApp.arrayIsCorrect()
+    ? "You Did It!"
+    : "Not In Order!";
 
   rainbowApp.renderItems();
 };
