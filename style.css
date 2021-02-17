@@ -40,7 +40,7 @@ h1 {
 .child {
   padding:  0.5rem;
   border-radius: 10px;
-  border : 1px solid red;
+
   background : lightpink;
   font-size: 2rem;
   text-align : center;
@@ -59,13 +59,21 @@ h1 {
   background-size: 1800% 1800%;
   background-image: url(./assets/pexels-fwstudio-132193.jpg);
   background-size: cover;
+  font-family: 'Quicksand', sans-serif;
 }
 
 #infoContainer {
   background: lightblue;
-  margin-top: 12px;
+  margin: 12px 5px;
   padding:  0.5rem;
   border-radius: 10px;
-  border : 1px solid blue;
+
   text-align : center;
 }
+
+.neon {
+  color: white;
+  text-shadow: 0 0 20px #ff005f;
+
+}
+

@@ -31,6 +31,7 @@ rainbowApp.renderItems = () => {
   rainbowApp.list.innerText = "";
   rainbowApp.randomized.forEach(item => {
     const node = document.createElement("li");
+    node.classList.add("neon");
     node.draggable = true;
     node.style.backgroundColor = item.color;
     node.style.color = item.fontColor;
